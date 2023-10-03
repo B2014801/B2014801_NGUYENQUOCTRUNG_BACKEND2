@@ -26,7 +26,12 @@ contact,
 { $set: { favorite: contact.favorite === true } },
 { returnDocument: "after", upsert: true }
 );
-return result.value;
+if(result.lastErrorObject.updatedExisting){
+    return false
+}
+else{ 
+    return result.value;
+}
 }
 
 async find(filter) {
